@@ -21,7 +21,17 @@ function agregarTweet(e){
         mostrarError('No puede ir vacío');
         return;//evita que se ejecuten mas lineas
     }
+    const tweetObj = {
+        id: Date.now(),
+        tweet
+    }
 
+    tweets = [...tweets, tweetObj];
+    // crear html
+    crearHTML();
+
+    //reiniciar el formulario
+    formulario.reset();
 }
 
 //mostrar error
@@ -38,4 +48,24 @@ function mostrarError(error){
     setTimeout(() => {
         mensajeError.remove();
     }, 3000);
+}
+
+//Muestra un listado de los tweets 
+function crearHTML(){
+    limpiarHTML();
+
+    if(tweets.length > 0 ){
+        tweets.forEach( tweet => {
+            const li = document.createElement('li');
+            li.innerText = tweet.tweet;
+            listaTweets.appendChild(li);
+        });
+    }
+}
+
+//limpiar html
+function limpiarHTML(){
+    while(listaTweets.firstChild){
+        listaTweets.removeChild(listaTweets.firstChild);
+    }
 }
